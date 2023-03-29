@@ -33,5 +33,6 @@ for ADDRESS_TO_SEARCH in address_list:
         "bbox_center" : center,
         "boundary_square_matrix" : boundary
     }
+    
 
-    print(f"{ADDRESS_TO_SEARCH}\n", response_body)
+    print(f"{ADDRESS_TO_SEARCH}\n", json.dump(response_body))

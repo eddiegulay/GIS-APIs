@@ -122,4 +122,4 @@ for feature in geo_coordinate_features:
         "boundary_square_matrix" : boundary
     }
 
-    print(response_body)
+    print(response_body) 
