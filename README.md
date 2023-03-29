@@ -179,7 +179,8 @@ response_body = {
 
 
 ## Region Boundaries
- 
+Just provide location address name and the method will find all coordinated for that region
+
 ### Overpass API
 Response From Overpass API is not very reliable and has complex queries as per requirements
 (Not satble)
@@ -187,6 +188,7 @@ Response From Overpass API is not very reliable and has complex queries as per r
 ### Osmnx API
 
 from osmnx boundary call get_coordinates(str:)
+
 ```python 
 address_name = "Kigamboni, Tanzania"
 boundary_coords = get_coordinates(address_name)
