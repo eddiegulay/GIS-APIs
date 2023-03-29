@@ -8,6 +8,10 @@ A collection of maps API from Google maps and Mapbox
 - Google Maps
 - Map Box
 
+2. Region Boundary
+- Open Street Overpass API
+- osmnx lib
+
 ### Google Maps Geocoding
 1. After Creating account and getting API Key
 Register it in the code
@@ -159,7 +163,7 @@ response_body = {
 
 ---
 
-## Getting Google Map API
+#### Getting Google Map API
 
 1. Create google cloud account
 2. In menu open API & services
@@ -167,7 +171,24 @@ response_body = {
 4. Select Geocoding API
 5. Click Enable
 
-## Getting MapBox Access Token
+#### Getting MapBox Access Token
+
 1. [open link]("https://docs.mapbox.com/playground/geocoding/")
 2. Create account
 3. Go back to playground then copy access token from there 
+
+
+## Region Boundaries
+ 
+### Overpass API
+Response From Overpass API is not very reliable and has complex queries as per requirements
+(Not satble)
+
+### Osmnx API
+
+from osmnx boundary call get_coordinates(str:)
+```python 
+address_name = "Kigamboni, Tanzania"
+boundary_coords = get_coordinates(address_name)
+boundary_coords : [(long), (lat)]
+```
