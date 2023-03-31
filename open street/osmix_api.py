@@ -1,4 +1,6 @@
 import osmnx as ox
+from array import array
+import csv
 
 
 def get_coordinates(place_name:str):
@@ -38,12 +40,25 @@ def get_road_distance(point1, point2, mode:str):
         return -1
 
 
+def process_region_boundary(region_name, response):
+    coordinates = [(lat, lng) for lat, lng in zip(response[1], response[0])]
 
-point1 = (39.275229073736654,-6.819505513688398)
-point2 = (39.27989377640603,-6.821308691427461)
+    # Define the CSV filename and column headers
+    filename = f'{region_name}_coordinates.csv'
+    headers = ['latitude', 'longitude']
 
-distance = get_distance(point1, point2)
-distance_r = get_road_distance(point1, point2, "drive")
+    # Open the CSV file for writing
+    with open(filename, 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
 
-print("linear: ", distance)
-print("Road: ", distance_r)
+        # Write the column headers
+        writer.writerow(headers)
+
+        # Write each coordinate as a row in the CSV file
+        for coord in coordinates:
+            writer.writerow(coord)
+
+address_name = "Kigamboni, Tanzania"
+boundary_coords = get_coordinates(address_name)
+
+process_region_boundary(address_name, boundary_coords)
