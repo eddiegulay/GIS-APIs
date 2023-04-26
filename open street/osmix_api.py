@@ -24,14 +24,33 @@ def get_distance(point1, point2):
 
 # get Actual distance by following roads
 # Returns distance in Meters
-def get_road_distance(point1, point2, mode:str):
+# def get_road_distance(point1, point2, mode:str):
+#     try:
+#         # Retrieve the street network for the two points
+#         p1_address = "Uhuru Street, Dar Es salaam"
+#         p2_address = "Kariakoo"
+
+#         G1 = ox.graph_from_point(p1_address, network_type="drive")
+#         G2 = ox.graph_from_point(p2_address, network_type="drive")
+
+#         # Calculate the distance between the two points by following roads in the street network
+#         distance = ox.distance.euclidean_dist_vec(G1, point1[1], point1[0], G2, point2[1], point2[0], method='haversine')  
+#         return distance
+#     except:
+#         return -1
+
+# get Actual distance by following roads 
+# this receives starting point and destination in string values
+# Returns distance in Meters
+def get_road_distance(p1_address:str, p2_address:str, mode:str):
     try:
         # Retrieve the street network for the two points
-        p1_address = "Uhuru Street, Dar Es salaam"
-        p2_address = "Kariakoo"
+        G1 = ox.graph_from_address(p1_address, network_type="drive")
+        G2 = ox.graph_from_address(p2_address, network_type="drive")
 
-        G1 = ox.graph_from_point(p1_address, network_type="drive")
-        G2 = ox.graph_from_point(p2_address, network_type="drive")
+        # Get the latitude and longitude coordinates of the two points
+        point1 = (G1.nodes[list(G1.nodes())[0]]['y'], G1.nodes[list(G1.nodes())[0]]['x'])
+        point2 = (G2.nodes[list(G2.nodes())[0]]['y'], G2.nodes[list(G2.nodes())[0]]['x'])
 
         # Calculate the distance between the two points by following roads in the street network
         distance = ox.distance.euclidean_dist_vec(G1, point1[1], point1[0], G2, point2[1], point2[0], method='haversine')  
@@ -58,7 +77,10 @@ def process_region_boundary(region_name, response):
         for coord in coordinates:
             writer.writerow(coord)
 
-address_name = "Kigamboni, Tanzania"
+address_name = "tanga, Tanzania"
 boundary_coords = get_coordinates(address_name)
 
 process_region_boundary(address_name, boundary_coords)
+
+
+
