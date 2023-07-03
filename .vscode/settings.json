@@ -1,0 +1,14 @@
+{
+    "python.testing.pytestArgs": [
+        "open_street"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./open_street",
+        "-p",
+        "*test.py"
+    ]
+}
