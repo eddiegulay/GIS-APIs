@@ -5,13 +5,11 @@ import csv
 
 def get_coordinates(place_name:str):
     try:
-        city_boundary = ox.geocode_to_gdf(place_name)
-        polygon = city_boundary["geometry"].iloc[0]
-
-        # Print the boundary coordinates
-        return polygon.exterior.coords.xy
+        location = ox.geocode(place_name)
+        return location
     except:
-        return []
+        return ()
+        
 
 # get approximate distance with Haversine algorithm
 # Returns distance in meters
@@ -23,22 +21,21 @@ def get_distance(point1, point2):
         return -1
 
 # get Actual distance by following roads
-
 def get_road_distance(p1_address:str, p2_address:str, mode:str):
-    try:
+    # try:
         # Retrieve the street network for the two points
-        G1 = ox.graph_from_address(p1_address, network_type="drive")
-        G2 = ox.graph_from_address(p2_address, network_type="drive")
+    G1 = ox.graph_from_address(p1_address, network_type="drive")
+    G2 = ox.graph_from_address(p2_address, network_type="drive")
 
-        # Get the latitude and longitude coordinates of the two points
-        point1 = (G1.nodes[list(G1.nodes())[0]]['y'], G1.nodes[list(G1.nodes())[0]]['x'])
-        point2 = (G2.nodes[list(G2.nodes())[0]]['y'], G2.nodes[list(G2.nodes())[0]]['x'])
+    # Get the latitude and longitude coordinates of the two points
+    point1 = (G1.nodes[list(G1.nodes())[0]]['y'], G1.nodes[list(G1.nodes())[0]]['x'])
+    point2 = (G2.nodes[list(G2.nodes())[0]]['y'], G2.nodes[list(G2.nodes())[0]]['x'])
 
-        # Calculate the distance between the two points by following roads in the street network
-        distance = ox.distance.euclidean_dist_vec(G1, point1[1], point1[0], G2, point2[1], point2[0], method='haversine')  
-        return distance
-    except:
-        return -1
+    # Calculate the distance between the two points by following roads in the street network
+    distance = ox.distance.euclidean_dist_vec(G1, point1[1], point1[0], G2, point2[1], point2[0], method='haversine')  
+    return distance
+    # except:
+        # return -1
 
 
 def process_region_boundary(region_name, response):
@@ -59,7 +56,6 @@ def process_region_boundary(region_name, response):
         for coord in coordinates:
             writer.writerow(coord)
 
-
-
-
-
+def geocoord_to_address(lat, lng):
+    location = ox.distance.nearest_edges(lat, lng)
+    return location
